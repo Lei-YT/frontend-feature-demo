@@ -47,8 +47,9 @@
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 <script defer type="text/javascript">
-  // $(document).ready(function() {
+  $(document).ready(function() {
   //logo
   // $('.poster-qrcode').erweima({
   // document.querySelector('.poster-qrcode').erweima({
@@ -59,16 +60,16 @@
   //   text: 'https://www.baidu.com/'
   // });
 
-  // var qrcode = new QRCode(document.querySelector("poster-qrcode"), {
-  //   text: "http://47.102.40.163/",
-  //   width: 128,
-  //   height: 128,
-  //   colorDark: "#000000",
-  //   colorLight: "#ffffff",
-  //   correctLevel: QRCode.CorrectLevel.H
-  // });
+  var qrcode = new QRCode(document.querySelector(".poster-qrcode"), {
+    text: "https://lei-yt.github.io/h5-pratice/canvas/",
+    width: 95,
+    height: 95,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
 
-  // });
+  });
   // 生成海报
   function createPoster() {
     document.documentElement.classList.add("hide-scrollbar");
