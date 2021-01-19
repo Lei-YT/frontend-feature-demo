@@ -1,4 +1,5 @@
 # Demos
 
-- [generate poster demo](https://lei-yt.github.io/h5-pratice/canvas/)
-- [drag element demo](https://lei-yt.github.io/h5-pratice/drag/)
+- [generate poster ](https://lei-yt.github.io/frontend-feature-demo/canvas/)
+- [drag element ](https://lei-yt.github.io/frontend-feature-demo/drag/)
+- [form data update to table>td ](https://lei-yt.github.io/frontend-feature-demo/edit/)
