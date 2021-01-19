@@ -1,0 +1,218 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo - 数据编辑和显示</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <style>
+    .flex-container {
+      display: flex;
+    }
+
+    .flex-item.data-table,
+    .flex-item.data-edit {
+      flex: 0 0 50%;
+      height: 100%;
+      padding: 1.5em;
+    }
+
+    .data-table {}
+
+    .data-edit {
+      border-left: 1px solid #cbcbcb;
+    }
+    .data-edit form{display: none;}
+
+    td {
+      line-height: 1.5em;
+      min-height: 1.5em;
+      min-width: 2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex-container ">
+    <div class="flex-item data-table">
+      <div class="table-container">
+        <table class="table is-bordered is-fullwidth">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Hotels</th>
+              <th>Tickets</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-th="Date" td-action action-target="">1</td>
+              <td data-th="Hotel" td-action action-target="form-hotels" id="hotel_1"></td>
+              <td data-th="Tickets" td-action action-target="form-tickets" id="ticket_1"></td>
+            </tr>
+            <tr>
+              <td data-th="Date" td-action action-target="">2</td>
+              <td data-th="Hotel" td-action action-target="form-hotels" id="hotel_2"></td>
+              <td data-th="Tickets" td-action action-target="form-tickets" id="ticket_2"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="flex-item data-edit">
+      <form action="" id="form-tickets" from-action="">
+        <div class="field">
+          <label class="label">Title
+            <span class='has-text-info'>Tickets</span>
+          </label>
+          <div class="control">
+            <!-- <input class="input" type="text" placeholder="e.g Alex Smith"> -->
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Name </label>
+          <div class="control">
+            <input class="input" type="text" name="hotelName" placeholder="Input Info">
+          </div>
+        </div>
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" name="select tickets" value="Forbidden City 1">
+            Forbidden City 1
+          </label>
+        </div>
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" name="select tickets" value="Forbidden City 2">
+            Forbidden City 2
+          </label>
+        </div>
+        <div class="field">
+          <div class="control">
+            <button class="button is-info">Submit</button>
+          </div>
+        </div>
+      </form>
+      <form action="" id="form-hotels" from-action="">
+        <div class="field">
+          <label class="label">Title
+            <span class='has-text-info'>Hotels</span>
+          </label>
+          <div class="control">
+            <!-- <input class="input" type="text" placeholder="e.g Alex Smith"> -->
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Name </label>
+          <div class="control">
+            <input class="input" type="text" name="hotelName" placeholder="Input Info">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Select </label>
+          <div class="control">
+            <div class="select">
+              <select name="hotelSelect">
+                <option value="star-4">Select dropdown</option>
+                <option value="star-5">With options</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <button class="button is-info">Submit</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+  document.querySelectorAll('td[td-action]').forEach(function(td, index) {
+    let formTarget = td.getAttribute('action-target');
+    if (!document.getElementById(formTarget))
+      return false;
+
+    td.addEventListener('click', function(e) {
+      document.querySelectorAll('.data-edit form').forEach(function(f, i){
+        f.style.display = 'none';
+      })
+      document.getElementById(formTarget).reset()
+      slideShow(document.getElementById(formTarget))
+      document.getElementById(formTarget).setAttribute('from-action', td.id)
+    })
+    let form = document.getElementById(formTarget);
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let formData = new FormData(form);
+      let formJson = (Object.fromEntries(formData))
+      console.log(formJson)
+      let fromTd = form.getAttribute('from-action')
+      document.getElementById(fromTd).innerHTML = (Object.values(formJson)).join(', ');
+      slideHide(document.getElementById(formTarget))
+    })
+  })
+
+  function slideHide(target, duration) {
+    duration = duration ? duration : 500;
+    target.style.transitionProperty = 'height, margin, padding';
+    target.style.transitionDuration = duration + 'ms';
+    target.style.boxSizing = 'border-box';
+    target.style.height = target.offsetHeight + 'px';
+    target.offsetHeight;
+    target.style.overflow = 'hidden';
+    target.style.height = 0;
+    target.style.paddingTop = 0;
+    target.style.paddingBottom = 0;
+    target.style.marginTop = 0;
+    target.style.marginBottom = 0;
+    window.setTimeout(() => {
+      target.style.display = 'none';
+      target.style.removeProperty('height');
+      target.style.removeProperty('padding-top');
+      target.style.removeProperty('padding-bottom');
+      target.style.removeProperty('margin-top');
+      target.style.removeProperty('margin-bottom');
+      target.style.removeProperty('overflow');
+      target.style.removeProperty('transition-duration');
+      target.style.removeProperty('transition-property');
+    }, duration);
+  }
+
+  function slideShow(target, duration) {
+    duration = duration ? duration : 500;
+    target.style.removeProperty('display');
+    let display = window.getComputedStyle(target).display;
+    if (display === 'none')
+      display = 'block';
+    target.style.display = display;
+    let height = target.offsetHeight;
+    target.style.overflow = 'hidden';
+    target.style.height = 0;
+    target.style.paddingTop = 0;
+    target.style.paddingBottom = 0;
+    target.style.marginTop = 0;
+    target.style.marginBottom = 0;
+    target.offsetHeight;
+    target.style.boxSizing = 'border-box';
+    target.style.transitionProperty = "height, margin, padding";
+    target.style.transitionDuration = duration + 'ms';
+    target.style.height = height + 'px';
+    target.style.removeProperty('padding-top');
+    target.style.removeProperty('padding-bottom');
+    target.style.removeProperty('margin-top');
+    target.style.removeProperty('margin-bottom');
+    window.setTimeout(() => {
+      target.style.removeProperty('height');
+      target.style.removeProperty('overflow');
+      target.style.removeProperty('transition-duration');
+      target.style.removeProperty('transition-property');
+    }, duration);
+  }
+</script>
+
+</html>
