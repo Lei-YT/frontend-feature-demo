@@ -8,11 +8,11 @@
 
 <body>
   <div class="quote-table" id="drag-container">
-    <div class="quote-row">
+    <div class="quote-row" data-id="2020-09-01">
       <div>2020-09-01</div>
       <div>2</div>
     </div>
-    <div class="quote-row">
+    <div class="quote-row" data-id="2020-09-02">
       <div>2020-09-02</div>
       <div>2</div>
     </div>
@@ -114,7 +114,7 @@
     var contextMenuLinkClassName = "context-menu__link";
     var contextMenuActive = "context-menu--active";
 
-    var taskItemClassName = "task";
+    var taskItemClassName = "quote-row";
     var taskItemInContext;
 
     var clickCoords;
